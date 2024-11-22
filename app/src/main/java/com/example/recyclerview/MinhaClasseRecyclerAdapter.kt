@@ -20,8 +20,8 @@ class MinhaClasseRecyclerAdapter(val arrayItens: ArrayList<Pessoa>):
 
     class MyViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView) {
         val nome: TextView = itemView.findViewById(R.id.nome)
-        //val idade: ImageView = itemView.findViewById(R.id.idade)
-        //val imagem: ImageView = itemView.findViewById(R.id.imageview)
+        val idade: TextView = itemView.findViewById(R.id.idade)
+        val imagem: ImageView = itemView.findViewById(R.id.imageView)
     }
 
 
@@ -33,7 +33,8 @@ class MinhaClasseRecyclerAdapter(val arrayItens: ArrayList<Pessoa>):
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val pessoa = arrayItens[position]
         holder.nome.text = pessoa.nome
-       // holder.idade = pessoa.idade
+        holder.idade.text = pessoa.idade.toString()
+        holder.imagem.setImageResource(pessoa.imagem)
 
      }
 
