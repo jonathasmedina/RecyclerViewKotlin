@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SnapHelper
 
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private var arrayItens = ArrayList<Pessoa>()
 
+    lateinit var meuRecyclerAdapter: MinhaClasseRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,23 +23,37 @@ class MainActivity : AppCompatActivity() {
         searchView_ = findViewById(R.id.searchView)
         recyclerView_ = findViewById(R.id.recyclerView)
 
+        searchView_.isIconified = false
+
         popularArrayList();
 
         configurarAdapter();
 
-        val snapHelper: SnapHelper = LinearSnapHelper() // ou PagerSnapHelper(); para simular ViewPager - elemento tela toda
-        snapHelper.attachToRecyclerView(recyclerView_)
+        //busca com searchview
+        searchView_.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false;
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                meuRecyclerAdapter.filtrar(p0.toString())
+                return false;
+            }
+        })
     }
 
     private fun popularArrayList() {
-        arrayItens.add(Pessoa("joão", 31, R.mipmap.ic_launcher_person))
-        arrayItens.add(Pessoa("joão 2", 131, R.mipmap.ic_launcher_person))
-        arrayItens.add(Pessoa("joão 3", 231, R.mipmap.ic_launcher_person))
+        arrayItens.add(Pessoa("João da Silva", "CEO", R.drawable.aiphoto))
+        arrayItens.add(Pessoa("Maria José", "Desenvolvedor Senior", R.drawable.aiphoto))
+        arrayItens.add(Pessoa("Pedro Paulo", "Desenvolvedor Junior", R.drawable.aiphoto))
+
+        arrayItens.add(Pessoa("João da Silva", "Desenvolvedor Pleno", R.drawable.aiphoto))
+        arrayItens.add(Pessoa("Francisca", "Full Stacker", R.drawable.aiphoto))
+        arrayItens.add(Pessoa("Edilene Pereira", "Back-end Developer", R.drawable.aiphoto))
     }
 
     private fun configurarAdapter() {
-        var meuRecyclerAdapter: MinhaClasseRecyclerAdapter = MinhaClasseRecyclerAdapter(arrayItens)
-        // ou só var meuRecyclerAdapter = MinhaClasseRecyclerAdapter(), sem o tipo
+        meuRecyclerAdapter = MinhaClasseRecyclerAdapter(arrayItens)
 
         val layoutManager: RecyclerView.LayoutManager =
             LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)

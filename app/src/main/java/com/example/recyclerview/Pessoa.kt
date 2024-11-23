@@ -1,6 +1,6 @@
 package com.example.recyclerview
 
 class Pessoa(var nome: String,
-              var idade: Int = 0,
+              var cargo: String,
               var imagem: Int = 0) {
 }
