@@ -62,6 +62,4 @@ class MinhaClasseRecyclerAdapter(val arrayItens: ArrayList<Pessoa>): RecyclerVie
         //notifica o adapter que os dados mudaram e atualiza a lista
         notifyDataSetChanged()
     }
-
-
 }
